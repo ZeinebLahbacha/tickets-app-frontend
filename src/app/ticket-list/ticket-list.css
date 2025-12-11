@@ -1,0 +1,56 @@
+/* Styles généraux pour le conteneur de la liste des tickets */
+.ticket-list-container {
+    padding: 20px;
+    font-family: Arial, sans-serif;
+}
+
+/* Style du titre principal */
+h1 {
+    color: #333;
+    margin-bottom: 25px;
+    border-bottom: 2px solid #eee;
+    padding-bottom: 10px;
+}
+
+/* Style du tableau */
+table {
+    width: 100%;
+    border-collapse: collapse; /* Fusionne les bordures des cellules */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Petite ombre portée */
+    background-color: #fff;
+}
+
+/* Style des en-têtes de colonnes (th) et des cellules (td) */
+th, td {
+    border: 1px solid #ddd;
+    padding: 12px 15px;
+    text-align: left;
+}
+
+/* Style spécifique pour les en-têtes */
+th {
+    background-color: #f4f4f4;
+    color: #555;
+    font-weight: bold;
+    text-transform: uppercase;
+    font-size: 0.9em;
+}
+
+/* Effet au survol des lignes */
+tr:hover {
+    background-color: #f9f9f9;
+}
+
+/* Style pour les lignes impaires (pour une meilleure lisibilité) */
+tr:nth-child(even) {
+    background-color: #f7f7f7;
+}
+
+/* Style pour les actions ou boutons */
+.actions button {
+    margin-right: 5px;
+    padding: 5px 10px;
+    border: none;
+    cursor: pointer;
+    border-radius: 3px;
+}
