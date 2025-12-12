@@ -101,7 +101,7 @@ td {
 .actions {
     display: flex;
     gap: 8px;
-    flex-wrap: wrap;
+    /* flex-wrap: wrap;  <-- supprimé */
 }
 
 .actions button {
@@ -117,16 +117,6 @@ td {
     box-shadow: 0 2px 8px rgba(102, 126, 234, 0.3);
 }
 
-.actions button:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(102, 126, 234, 0.5);
-    background: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
-}
-
-.actions button:active {
-    transform: translateY(0);
-    box-shadow: 0 2px 6px rgba(102, 126, 234, 0.3);
-}
 
 /* Boutons spécifiques par type d'action */
 .actions button.edit {
