@@ -6,7 +6,7 @@ import { Ticket } from '../models/ticket';
 @Component({
   selector: 'app-ticket-list',
   standalone: true,
-  imports: [CommonModule], // plus besoin de HttpClientModule
+  imports: [CommonModule],
   templateUrl: './ticket-list.html',
   styleUrls: ['./ticket-list.css']
 })
@@ -24,5 +24,25 @@ export class TicketListComponent implements OnInit {
       },
       error: (err) => console.error('Erreur récupération tickets', err)
     });
+  }
+
+  // Méthode pour déterminer la classe CSS de la priorité
+  getPriorityClass(priorite?: 'HAUTE' | 'MOYENNE' | 'BASSE'): string {
+    switch (priorite) {
+      case 'HAUTE': return 'urgent';
+      case 'MOYENNE': return 'moyen';
+      case 'BASSE': return 'faible';
+      default: return '';
+    }
+  }
+
+  // Méthode pour déterminer la classe CSS du statut
+  getStatusClass(statut?: 'OUVERT' | 'EN_COURS' | 'FERME'): string {
+    switch (statut) {
+      case 'OUVERT': return 'ouvert';
+      case 'EN_COURS': return 'en-cours';
+      case 'FERME': return 'ferme';
+      default: return '';
+    }
   }
 }

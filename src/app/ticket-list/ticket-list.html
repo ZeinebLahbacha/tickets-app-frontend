@@ -10,17 +10,39 @@
         <th>Priorité</th>
         <th>Statut</th>
         <th>Assigné à</th>
+        <th>Actions</th>
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let ticket of tickets">
+      <tr *ngFor="let ticket of tickets"
+          [ngClass]="{
+            'priority-urgent': ticket.priorite === 'HAUTE',
+            'priority-moyen': ticket.priorite === 'MOYENNE',
+            'priority-faible': ticket.priorite === 'BASSE'
+          }">
         <td>{{ ticket.id }}</td>
         <td>{{ ticket.titre || 'Sans titre' }}</td>
-        <td>{{ ticket.description }}</td>
-        <td>{{ ticket.priorite || 'Non définie' }}</td>
-        <td>{{ ticket.statut || 'Non défini' }}</td>
+        <td>{{ ticket.description || '-' }}</td>
+        <td>
+          <span class="priority-badge" [ngClass]="getPriorityClass(ticket.priorite)">
+            {{ ticket.priorite || 'Non définie' }}
+          </span>
+        </td>
+        <td>
+          <span class="status-badge" [ngClass]="getStatusClass(ticket.statut)">
+            {{ ticket.statut || 'Non défini' }}
+          </span>
+        </td>
         <td>{{ ticket.assigneA?.nom || 'Non assigné' }}</td>
+        <td class="actions">
+          <button class="edit">Editer</button>
+          <button class="delete">Supprimer</button>
+        </td>
       </tr>
     </tbody>
   </table>
+
+  <div *ngIf="tickets.length === 0" class="empty-state">
+    Aucun ticket disponible
+  </div>
 </div>
