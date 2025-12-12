@@ -1,19 +1,26 @@
 <div class="ticket-list-container">
-    <h1>Liste des tickets</h1>
+  <h1>Liste des tickets</h1>
 
-    <table>
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Titre</th>
-                <th>Description</th>
-                <th>Priorité</th>
-                <th>Statut</th>
-                <th>Assigné à</th>
-            </tr>
-        </thead>
-        <tbody>
-            </tbody>
-    </table>
-    
+  <table>
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Titre</th>
+        <th>Description</th>
+        <th>Priorité</th>
+        <th>Statut</th>
+        <th>Assigné à</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let ticket of tickets">
+        <td>{{ ticket.id }}</td>
+        <td>{{ ticket.titre || 'Sans titre' }}</td>
+        <td>{{ ticket.description }}</td>
+        <td>{{ ticket.priorite || 'Non définie' }}</td>
+        <td>{{ ticket.statut || 'Non défini' }}</td>
+        <td>{{ ticket.assigneA?.nom || 'Non assigné' }}</td>
+      </tr>
+    </tbody>
+  </table>
 </div>

@@ -1,15 +1,13 @@
 import { Component, signal } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-
-// CORRECTION DU CHEMIN : Pointe vers le fichier 'ticket-list.ts'
-import { TicketListComponent } from './ticket-list/ticket-list'; 
+import { TicketListComponent } from './ticket-list/ticket-list';
 
 @Component({
   selector: 'app-root',
-  // Ajout de TicketListComponent dans le tableau des imports
-  imports: [RouterOutlet, TicketListComponent], 
+  standalone: true, // il faut mettre standalone: true si c'est un composant standalone
+  imports: [RouterOutlet, TicketListComponent], // c'est correct
   templateUrl: './app.html',
-  styleUrl: './app.css'
+  styleUrls: ['./app.css'] // <-- correction : styleUrls (pluriel)
 })
 export class App {
   protected readonly title = signal('tickets-app');

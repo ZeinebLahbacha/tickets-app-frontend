@@ -1,16 +1,28 @@
-// src/app/ticket-list/ticket-list.ts
-
-import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common'; // <-- NOUVELLE IMPORTATION
+import { Component, OnInit } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { TicketService } from '../services/ticket';
+import { Ticket } from '../models/ticket';
 
 @Component({
   selector: 'app-ticket-list',
-  standalone: true, 
-  // AJOUT DE CommonModule (pour *ngFor, *ngIf, et autres)
-  imports: [CommonModule], 
+  standalone: true,
+  imports: [CommonModule], // plus besoin de HttpClientModule
   templateUrl: './ticket-list.html',
-  styleUrl: './ticket-list.css' // Le CSS sera correctement chargé une fois l'erreur corrigée
+  styleUrls: ['./ticket-list.css']
 })
-export class TicketListComponent {
-  // ... Le reste de votre classe
+export class TicketListComponent implements OnInit {
+  tickets: Ticket[] = [];
+
+  constructor(private ticketService: TicketService) {}
+
+  ngOnInit(): void {
+    console.log('ngOnInit appelé');
+    this.ticketService.getAll().subscribe({
+      next: (data) => {
+        console.log('Tickets reçus :', data);
+        this.tickets = data;
+      },
+      error: (err) => console.error('Erreur récupération tickets', err)
+    });
+  }
 }
