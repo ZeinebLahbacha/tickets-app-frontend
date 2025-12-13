@@ -1,0 +1,399 @@
+/* Conteneur général de la liste des tickets */
+.ticket-list-container {
+    padding: 30px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    border-radius: 12px;
+    max-width: 1200px;
+    margin: 20px auto;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+}
+
+/* Titre principal */
+h1 {
+    color: #2c3e50;
+    margin-bottom: 30px;
+    border-bottom: 3px solid #3498db;
+    padding-bottom: 15px;
+    font-size: 2em;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+}
+
+/* Tableau */
+table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    background-color: #ffffff;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+}
+
+/* En-têtes et cellules */
+th, td {
+    padding: 16px 24px;
+    text-align: left;
+    border-bottom: 1px solid #ecf0f1;
+}
+
+/* En-têtes */
+th {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: #ffffff;
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 0.85em;
+    letter-spacing: 0.5px;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+}
+
+/* Première et dernière colonne d'en-tête */
+th:first-child {
+    border-top-left-radius: 10px;
+}
+
+th:last-child {
+    border-top-right-radius: 10px;
+}
+
+/* Lignes du tableau */
+tr {
+    transition: all 0.3s ease;
+}
+
+/* Lignes alternées */
+tbody tr:nth-child(even) {
+    background-color: #f8f9fa;
+}
+
+tbody tr:nth-child(odd) {
+    background-color: #ffffff;
+}
+
+/* Lignes au survol */
+tbody tr:hover {
+    background-color: #e3f2fd;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    cursor: pointer;
+}
+
+/* Dernière ligne */
+tbody tr:last-child td:first-child {
+    border-bottom-left-radius: 10px;
+}
+
+tbody tr:last-child td:last-child {
+    border-bottom-right-radius: 10px;
+}
+
+/* Cellules spécifiques */
+td {
+    color: #2c3e50;
+    font-size: 0.95em;
+}
+
+/* Actions / boutons */
+.actions {
+    display: flex;
+    gap: 8px;
+    /* flex-wrap: wrap;  <-- supprimé */
+}
+
+.actions button {
+    padding: 8px 16px;
+    border: none;
+    cursor: pointer;
+    border-radius: 6px;
+    font-size: 0.85em;
+    font-weight: 500;
+    color: #fff;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 8px rgba(102, 126, 234, 0.3);
+}
+
+
+/* Boutons spécifiques par type d'action */
+.actions button.edit {
+    background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+    box-shadow: 0 2px 8px rgba(245, 87, 108, 0.3);
+}
+
+.actions button.edit:hover {
+    background: linear-gradient(135deg, #f5576c 0%, #f093fb 100%);
+    box-shadow: 0 4px 12px rgba(245, 87, 108, 0.5);
+}
+
+.actions button.delete {
+    background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+    box-shadow: 0 2px 8px rgba(250, 112, 154, 0.3);
+}
+
+.actions button.delete:hover {
+    background: linear-gradient(135deg, #fee140 0%, #fa709a 100%);
+    box-shadow: 0 4px 12px rgba(250, 112, 154, 0.5);
+}
+
+/* État vide */
+.empty-state {
+    text-align: center;
+    padding: 60px 20px;
+    color: #7f8c8d;
+    font-size: 1.1em;
+}
+
+.empty-state::before {
+    content: "📋";
+    display: block;
+    font-size: 3em;
+    margin-bottom: 15px;
+    opacity: 0.5;
+}
+
+/* Badges de statut */
+.status-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 0.8em;
+    font-weight: 600;
+    text-transform: uppercase;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+    transition: all 0.3s ease;
+}
+
+.status-badge:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+/* Icônes de statut avec pseudo-éléments */
+.status-badge::before {
+    content: "";
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.8);
+    animation: pulse 2s infinite;
+}
+
+.status-badge.ouvert {
+    background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
+    color: white;
+}
+
+.status-badge.ferme {
+    background: linear-gradient(135deg, #2ecc71 0%, #27ae60 100%);
+    color: white;
+}
+
+.status-badge.en-cours {
+    background: linear-gradient(135deg, #f39c12 0%, #e67e22 100%);
+    color: white;
+}
+
+.status-badge.en-attente {
+    background: linear-gradient(135deg, #9b59b6 0%, #8e44ad 100%);
+    color: white;
+}
+
+/* Animation pulse pour les statuts actifs */
+@keyframes pulse {
+    0%, 100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+    50% {
+        opacity: 0.6;
+        transform: scale(1.1);
+    }
+}
+
+/* Badges de priorité */
+.priority-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 0.8em;
+    font-weight: 700;
+    text-transform: uppercase;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+    transition: all 0.3s ease;
+}
+
+.priority-badge:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
+}
+
+/* Priorité URGENT - Rouge */
+.priority-badge.urgent {
+    background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
+    color: white;
+    animation: urgentBlink 1.5s infinite;
+}
+
+.priority-badge.urgent::before {
+    content: "🔴";
+    font-size: 1em;
+}
+
+/* Priorité MOYENNE - Jaune/Orange */
+.priority-badge.moyen,
+.priority-badge.moyenne {
+    background: linear-gradient(135deg, #f39c12 0%, #e67e22 100%);
+    color: white;
+}
+
+.priority-badge.moyen::before,
+.priority-badge.moyenne::before {
+    content: "🟡";
+    font-size: 1em;
+}
+
+/* Priorité FAIBLE - Vert */
+.priority-badge.faible,
+.priority-badge.basse {
+    background: linear-gradient(135deg, #2ecc71 0%, #27ae60 100%);
+    color: white;
+}
+
+.priority-badge.faible::before,
+.priority-badge.basse::before {
+    content: "🟢";
+    font-size: 1em;
+}
+
+/* Animation clignotante pour urgent */
+@keyframes urgentBlink {
+    0%, 100% {
+        box-shadow: 0 2px 6px rgba(231, 76, 60, 0.4);
+    }
+    50% {
+        box-shadow: 0 4px 15px rgba(231, 76, 60, 0.8);
+    }
+}
+
+/* Coloration des lignes selon la priorité */
+tbody tr.priority-urgent {
+    border-left: 5px solid #e74c3c;
+    background-color: #ffebee !important;
+}
+
+tbody tr.priority-urgent:hover {
+    background-color: #ffcdd2 !important;
+}
+
+tbody tr.priority-moyen,
+tbody tr.priority-moyenne {
+    border-left: 5px solid #f39c12;
+    background-color: #fff8e1 !important;
+}
+
+tbody tr.priority-moyen:hover,
+tbody tr.priority-moyenne:hover {
+    background-color: #ffecb3 !important;
+}
+
+tbody tr.priority-faible,
+tbody tr.priority-basse {
+    border-left: 5px solid #2ecc71;
+    background-color: #e8f5e9 !important;
+}
+
+tbody tr.priority-faible:hover,
+tbody tr.priority-basse:hover {
+    background-color: #c8e6c9 !important;
+}
+
+/* Responsive : table scroll sur petit écran */
+@media screen and (max-width: 768px) {
+    .ticket-list-container {
+        padding: 15px;
+        margin: 10px;
+    }
+    
+    h1 {
+        font-size: 1.5em;
+    }
+    
+    table {
+        display: block;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+    
+    th, td {
+        padding: 12px 16px;
+        font-size: 0.85em;
+    }
+    
+    .actions {
+        flex-direction: column;
+    }
+    
+    .actions button {
+        width: 100%;
+        margin-bottom: 5px;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .ticket-list-container {
+        padding: 10px;
+    }
+    
+    h1 {
+        font-size: 1.3em;
+        margin-bottom: 20px;
+    }
+    
+    th, td {
+        padding: 10px 12px;
+        font-size: 0.8em;
+    }
+}
+
+/* Animation de chargement (optionnel) */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+tbody tr {
+    animation: fadeIn 0.5s ease-in-out;
+}
+
+/*Scrollbar personnalisée */
+table::-webkit-scrollbar {
+    height: 8px;
+}
+
+table::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 10px;
+}
+
+table::-webkit-scrollbar-thumb {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border-radius: 10px;
+}
+
+table::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
+}
