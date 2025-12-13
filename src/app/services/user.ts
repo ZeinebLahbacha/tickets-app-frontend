@@ -16,7 +16,13 @@ export class UtilisateurService {
 
   constructor(private http: HttpClient) {}
 
+  // Ajouter un utilisateur
   addUser(user: Utilisateur): Observable<Utilisateur> {
     return this.http.post<Utilisateur>(this.apiUrl, user);
+  }
+
+  // Récupérer tous les utilisateurs
+  getAll(): Observable<Utilisateur[]> {
+    return this.http.get<Utilisateur[]>(this.apiUrl);
   }
 }

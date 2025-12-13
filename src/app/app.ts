@@ -1,12 +1,11 @@
 import { Component, signal } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { TicketListComponent } from './ticket-list/ticket-list';
-import { UserAddComponent } from './user/user';
+import { Sidebar } from './components/sidebar/sidebar';
 
 @Component({
   selector: 'app-root',
   standalone: true, 
-  imports: [RouterOutlet, TicketListComponent , UserAddComponent], 
+  imports: [RouterOutlet , Sidebar ], 
   templateUrl: './app.html',
   styleUrls: ['./app.css'] 
 })

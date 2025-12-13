@@ -35,7 +35,8 @@
             </span>
           </td>
 
-          <td>{{ ticket.assigneA?.id  }}</td>
+          <td>{{ ticket.assigneA?.nom || 'Non assigné' }}</td>
+
 
           <td class="actions">
             <button>Editer</button>

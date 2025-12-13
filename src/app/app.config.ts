@@ -4,12 +4,12 @@ import { provideRouter } from '@angular/router';
 import { provideHttpClient, withFetch } from '@angular/common/http';
 import { provideClientHydration, withEventReplay } from '@angular/platform-browser';
 
-import { routes } from './app.routes';
+import { appRoutes  } from './app.routes';
 
 export const appConfig: ApplicationConfig = {
   providers: [
     provideBrowserGlobalErrorListeners(),
-    provideRouter(routes),
+    provideRouter(appRoutes ),
     provideClientHydration(withEventReplay()),
     provideHttpClient(withFetch()) // <-- ajoute cette ligne pour activer fetch
   ]
