@@ -1,9 +1,10 @@
-import { Component } from '@angular/core';
+import { Component, output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { TicketService } from '../../services/ticket';
 import { UtilisateurService, Utilisateur } from '../../services/user';
 import { Ticket } from '../../models/ticket';
+import { EventEmitter, Output } from '@angular/core';
 
 @Component({
   selector: 'app-ticket-form',
@@ -13,6 +14,8 @@ import { Ticket } from '../../models/ticket';
   styleUrls: ['./ticket-form.css']
 })
 export class TicketFormComponent {
+@Output() ticketAdded = new EventEmitter<any>();
+
   showForm = false;
 
   ticket: Ticket = {
@@ -28,20 +31,44 @@ export class TicketFormComponent {
   priorites = ['URGENT', 'MOYEN', 'FAIBLE'] as const;
   statuts = ['NOUVEAU', 'EN_COURS', 'RESOLU'] as const;
 
+  // 🔹 Propriétés pour filtrage
+  tickets: Ticket[] = []; // tickets récupérés
+  searchKeyword: string = '';
+  filterPriorite: string = '';
+  filterStatut: string = '';
+
   constructor(
     private ticketService: TicketService,
     private utilisateurService: UtilisateurService
   ) {}
-ngOnInit(): void {
+
+  ngOnInit(): void {
+    // Récupérer les utilisateurs
     this.utilisateurService.getAll().subscribe({
-      next: (data) => {
-        this.users = data;
-      },
+      next: (data) => { this.users = data; },
       error: (err) => console.error('Erreur récupération des utilisateurs', err)
     });
+
+
   }
+
+ 
+
   toggleForm(): void {
     this.showForm = !this.showForm;
+  }
+
+  // 🔹 Méthode pour filtrer les tickets
+  filteredTickets(): Ticket[] {
+    return this.tickets.filter(ticket => {
+      const matchKeyword = ticket.titre?.toLowerCase().includes(this.searchKeyword.toLowerCase()) ?? false;
+      const matchPriorite = this.filterPriorite ? ticket.priorite === this.filterPriorite : true;
+      const matchStatut = this.filterStatut ? ticket.statut === this.filterStatut : true;
+      return matchKeyword && matchPriorite && matchStatut;
+    });
+  }
+  addItem(ticket: any): any {
+    this.ticketAdded.emit(ticket);
   }
 
   addTicket(form: any): void {
@@ -51,15 +78,19 @@ ngOnInit(): void {
     }
 
     const selectedUser = this.users.find(u => u.id == this.assigneAId)!;
-    this.ticket.assigneA = { id: selectedUser.id};
-console.log(this.ticket);
+    this.ticket.assigneA = { id: selectedUser.id };
+    console.log(this.ticket);
+
     this.ticketService.create(this.ticket).subscribe({
       next: () => {
-        alert('Ticket ajouté avec succès !');
+       this.ticketAdded.emit(this.ticket); 
+
+        // Réinitialiser le formulaire
         this.ticket = { titre: '', description: '', priorite: 'MOYEN', statut: 'NOUVEAU', assigneA: null };
         this.assigneAId = null;
         form.resetForm();
         this.showForm = false;
+
       },
       error: err => {
         console.error(err);

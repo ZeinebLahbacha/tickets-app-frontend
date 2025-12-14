@@ -1,0 +1,19 @@
+.main-content {
+  margin-left: 280px; /* largeur de la sidebar */
+  min-height: 100vh;
+  background: #f5f7fa;
+  transition: margin-left 0.3s ease;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .main-content {
+    margin-left: 240px;
+  }
+}
+
+@media (max-width: 480px) {
+  .main-content {
+    margin-left: 200px;
+  }
+}

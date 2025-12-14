@@ -1,8 +1,10 @@
 <div class="ticket-form-container">
+  
   <!-- Bouton pour afficher/cacher le formulaire -->
   <button type="button" (click)="toggleForm()" class="actions btn-toggle">
     {{ showForm ? 'Annuler' : 'Ajouter un ticket' }}
   </button>
+
 
   <!-- Formulaire d'ajout -->
   <form *ngIf="showForm" #ticketForm="ngForm" (ngSubmit)="addTicket(ticketForm)" class="ticket-form-card">

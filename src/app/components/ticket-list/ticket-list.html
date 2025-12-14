@@ -1,6 +1,35 @@
 <div class="ticket-list-container">
   <h1>Liste des tickets</h1>
 
+  <!-- FILTRES -->
+  <div class="filter-container" style="margin-bottom: 20px; display: flex; gap: 10px; flex-wrap: wrap;">
+    <!-- Recherche par titre -->
+    <input
+      type="text"
+      placeholder="Rechercher par titre..."
+      [(ngModel)]="searchKeyword"
+      (input)="applyFilters()"
+      style="padding: 8px; border-radius: 6px; border: 1px solid #ccc;"
+    />
+
+    <!-- Filtre par statut -->
+    <select [(ngModel)]="filterStatus" (change)="applyFilters()" style="padding: 8px; border-radius: 6px; border: 1px solid #ccc;">
+      <option value="">Tous les statuts</option>
+      <option value="NOUVEAU">Nouveau</option>
+      <option value="EN_COURS">En cours</option>
+      <option value="RESOLU">Résolu</option>
+    </select>
+
+    <!-- Filtre par priorité -->
+    <select [(ngModel)]="filterPriority" (change)="applyFilters()" style="padding: 8px; border-radius: 6px; border: 1px solid #ccc;">
+      <option value="">Toutes les priorités</option>
+      <option value="URGENT">Urgent</option>
+      <option value="MOYEN">Moyen</option>
+      <option value="FAIBLE">Faible</option>
+    </select>
+  </div>
+
+  <!-- TABLEAU DES TICKETS -->
   <div class="table-wrapper">
     <table>
       <thead>
@@ -16,7 +45,7 @@
       </thead>
 
       <tbody>
-        <tr *ngFor="let ticket of tickets" [ngClass]="getRowPriorityClass(ticket.priorite)">
+        <tr *ngFor="let ticket of filteredTickets" [ngClass]="getRowPriorityClass(ticket.priorite)">
           <td>{{ ticket.id }}</td>
           <td>{{ ticket.titre || 'Sans titre' }}</td>
           <td>{{ ticket.description || '-' }}</td>
@@ -37,7 +66,6 @@
 
           <td>{{ ticket.assigneA?.nom || 'Non assigné' }}</td>
 
-
           <td class="actions">
             <button>Editer</button>
             <button class="delete" (click)="deleteTicket(ticket.id)">Supprimer</button>
@@ -48,7 +76,8 @@
   </div>
 
   <!-- État vide -->
-  <div *ngIf="tickets.length === 0" class="empty-state">
+  <div *ngIf="filteredTickets.length === 0" class="empty-state" style="margin-top: 20px; font-style: italic;">
     Aucun ticket disponible
   </div>
 </div>
+<app-ticket-form (ticketAdded)="addedTicket($event)"> </app-ticket-form>
