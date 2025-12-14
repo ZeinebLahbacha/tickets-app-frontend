@@ -29,6 +29,32 @@
     </select>
   </div>
 
+<!-- Formulaire de mise à jour -->
+<div *ngIf="showUpdateForm" class="update-form" style="margin-bottom: 20px; padding: 10px; border: 1px solid #ccc; border-radius: 8px;">
+  <h3>Modifier le ticket #{{ selectedTicket?.id }}</h3>
+
+  <label>
+    Statut:
+    <select [(ngModel)]="selectedTicket!.statut">
+      <option value="NOUVEAU">Nouveau</option>
+      <option value="EN_COURS">En cours</option>
+      <option value="RESOLU">Résolu</option>
+    </select>
+  </label>
+
+  <label style="margin-left: 10px;">
+    Priorité:
+    <select [(ngModel)]="selectedTicket!.priorite">
+      <option value="URGENT">Urgent</option>
+      <option value="MOYEN">Moyen</option>
+      <option value="FAIBLE">Faible</option>
+    </select>
+  </label>
+
+  <button (click)="updateTicket()" style="margin-left: 10px;">Enregistrer</button>
+  <button (click)="cancelUpdate()" style="margin-left: 5px;">Annuler</button>
+</div>
+
   <!-- TABLEAU DES TICKETS -->
   <div class="table-wrapper">
     <table>
@@ -67,7 +93,7 @@
           <td>{{ ticket.assigneA?.nom || 'Non assigné' }}</td>
 
           <td class="actions">
-            <button>Editer</button>
+            <button (click)="editTicket(ticket)">Editer</button>
             <button class="delete" (click)="deleteTicket(ticket.id)">Supprimer</button>
           </td>
         </tr>

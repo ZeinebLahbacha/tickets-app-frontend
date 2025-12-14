@@ -1,0 +1,40 @@
+<div class="d-flex">
+  <app-sidebar></app-sidebar>
+
+  <div class="main-content flex-grow-1 p-3">
+    <div class="dashboard">
+      
+      <!-- Statistiques -->
+      <div class="stats-cards d-flex flex-wrap gap-3">
+        <div class="card">
+          <h3>Total Tickets</h3>
+          <p>{{ totalTickets }}</p>
+        </div>
+        <div class="card">
+          <h3>Tickets Ouverts</h3>
+          <p>{{ openTickets }}</p>
+        </div>
+        <div class="card">
+          <h3>Tickets Résolus</h3>
+          <p>{{ resolvedTickets }}</p>
+        </div>
+      </div>
+
+      <!-- Graphiques -->
+      <div class="charts mt-4">
+        <div class="chart-container">
+          <canvas id="ticketsStatusChart"></canvas>
+        </div>
+        <div class="chart-container">
+          <canvas id="ticketsPriorityChart"></canvas>
+        </div>
+      </div>
+
+      <!-- Liste rapide de tickets récents -->
+      <div class="recent-tickets mt-4">
+        <app-ticket-list></app-ticket-list>
+      </div>
+
+    </div>
+  </div>
+</div>

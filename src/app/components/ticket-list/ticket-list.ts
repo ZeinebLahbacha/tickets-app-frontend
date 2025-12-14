@@ -22,6 +22,9 @@ export class TicketListComponent implements OnInit {
   filterStatus: 'NOUVEAU' | 'EN_COURS' | 'RESOLU' | '' = '';
   filterPriority: 'URGENT' | 'MOYEN' | 'FAIBLE' | '' = '';
 
+  selectedTicket?: Ticket;       // Ticket en cours de modification
+  showUpdateForm: boolean = false; // Contrôle l'affichage du formulaire
+
   constructor(private ticketService: TicketService) {}
 
   ngOnInit(): void {
@@ -34,7 +37,7 @@ export class TicketListComponent implements OnInit {
     this.ticketService.getAll().subscribe({
       next: (data) => {
         this.tickets = data;
-        this.applyFilters(); // ← CORRECTION: Appel ajouté pour initialiser filteredTickets
+        this.applyFilters();
         this.isLoading = false;
       },
       error: (err) => {
@@ -50,14 +53,42 @@ export class TicketListComponent implements OnInit {
     this.applyFilters();
   }
 
-  // Supprimer un ticket par id avec splice
+  // Ouvrir le formulaire pour modifier un ticket
+  editTicket(ticket: Ticket) {
+    this.selectedTicket = { ...ticket }; // copie pour ne pas modifier directement
+    this.showUpdateForm = true;
+  }
+
+  // Mettre à jour le ticket
+  updateTicket() {
+    if (!this.selectedTicket?.id) return;
+
+    this.ticketService.update(this.selectedTicket.id, this.selectedTicket).subscribe({
+      next: (updated) => {
+        const index = this.tickets.findIndex(t => t.id === updated.id);
+        if (index !== -1) {
+          this.tickets[index] = updated;
+          this.applyFilters();
+        }
+        this.selectedTicket = undefined; // fermer le formulaire
+        this.showUpdateForm = false;
+      },
+      error: (err) => console.error('Erreur mise à jour ticket', err)
+    });
+  }
+
+  // Annuler la modification
+  cancelUpdate() {
+    this.selectedTicket = undefined;
+    this.showUpdateForm = false;
+  }
+
+  // Supprimer un ticket
   deleteTicket(id: number | undefined): void {
     if (!id) return;
-
     const index = this.tickets.findIndex(t => t.id === id);
     if (index === -1) return;
 
-   
     this.ticketService.delete(id).subscribe({
       next: () => {
         this.tickets.splice(index, 1);

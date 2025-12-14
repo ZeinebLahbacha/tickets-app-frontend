@@ -9,12 +9,14 @@ import { EventEmitter, Output } from '@angular/core';
 @Component({
   selector: 'app-ticket-form',
   standalone: true,
+  
   imports: [FormsModule, CommonModule],
   templateUrl: './ticket-form.html',
   styleUrls: ['./ticket-form.css']
 })
 export class TicketFormComponent {
 @Output() ticketAdded = new EventEmitter<any>();
+
 
   showForm = false;
 
